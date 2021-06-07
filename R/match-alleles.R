@@ -281,7 +281,7 @@ snp_asGeneticPos <- function(infos.chr, infos.pos, dir = tempdir(), ncores = 1,
     mapfile <- file.path(dir, basename)
     if (!file.exists(mapfile)) {
       url <- paste0("https://github.com/joepickrell/1000-genomes-genetic-maps/",
-                    "raw/master/interpolated_OMNI/", basename, ".gz")
+                    "tree/master/interpolated_OMNI/", basename, ".gz")
       gzfile <- paste0(mapfile, ".gz")
       utils::download.file(url, destfile = gzfile, quiet = TRUE)
       R.utils::gunzip(gzfile)
