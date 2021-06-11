@@ -286,23 +286,28 @@ snp_asGeneticPos <- function(infos.chr, infos.pos, dir = tempdir(), ncores = 1,
       utils::download.file(url, destfile = gzfile, quiet = TRUE)
       R.utils::gunzip(gzfile)
     }
+    print('Check Point 1')
     map.chr <- bigreadr::fread2(mapfile, showProgress = FALSE)
 
     if (is.null(rsid)) {
+      print('Check Point 2')
       ind <- bigutilsr::knn_parallel(as.matrix(map.chr$V2), as.matrix(pos[ind.chr]),
                                      k = 1, ncores = 1)$nn.idx
       new_pos <- map.chr$V3[ind]
     } else {
+      print('Check Point 3')
       ind <- match(rsid[ind.chr], map.chr$V1)
       new_pos <- map.chr$V3[ind]
 
       indNA <- which(is.na(ind))
       if (length(indNA) > 0) {
+        print('Check Point 4')
         pos.chr <- pos[ind.chr]
         new_pos[indNA] <- suppressWarnings(
           stats::spline(pos.chr, new_pos, xout = pos.chr[indNA], method = "hyman")$y)
       }
     }
+    print('Check Point 5')
 
     new_pos
 
